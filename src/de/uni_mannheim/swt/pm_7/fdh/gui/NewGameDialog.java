@@ -26,6 +26,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -63,6 +65,9 @@ public class NewGameDialog extends JFrame implements ActionListener,
 
 	/** The start game. */
 	private JButton startGame;
+
+	/** The menu game. */
+	private JButton menuGame;
 
 	/** The Start new game action_. */
 	private ActionListener StartNewGameAction_;
@@ -111,11 +116,27 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.getContentPane().setBackground(Color.BLACK);
 		this.setEnabled(true);
 		this.setForeground(Color.WHITE);
-		this.setBackground(Color.BLACK);
+		this.setBackground(Color.white);
 		this.setLocationByPlatform(true);
 		this.setTitle("Coppit Game");
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/de/uni_mannheim/swt/pm_7/fdh/gui/coppitIcon.png"));	
         this.loadImage();
+		JFrame frame = new JFrame();
+		// Obter o dispositivo gráfico padrão
+		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+
+		// Verificar se o dispositivo suporta o modo de tela cheia
+		if (device.isFullScreenSupported()) {
+			// Definir o estado da janela como maximizado
+			this.setExtendedState(frame.MAXIMIZED_BOTH);
+
+			// Definir o dispositivo gráfico como tela cheia
+			device.setFullScreenWindow(frame);
+		} else {
+			// Se o modo de tela cheia não for suportado, defina a janela com um tamanho fixo
+			frame.setSize(800, 600);
+			frame.setLocationRelativeTo(null); // Centralizar a janela na tela
+		}
 
 		this.initButton();
 		this.getContentPane().add(this.clickNewGame_);
@@ -331,6 +352,7 @@ public class NewGameDialog extends JFrame implements ActionListener,
 				}
 
 			}
+			
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -413,11 +435,32 @@ public class NewGameDialog extends JFrame implements ActionListener,
 			this.getContentPane().add(f);
 		}
 
+		this.menuGame = new JButton(Messages.getString("FDHBoardView.13"));
+		this.menuGame.setBounds(this.getWidth() - 500, this.getHeight() - 90,
+		200, 40);
+		this.menuGame.setForeground(Color.WHITE);
+		this.menuGame.setBackground(new Color(100, 100, 100, 200));
+		this.menuGame.setVisible(true);
+
+		menuGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//FMV.dispatchEvent(new WindowEvent(FMV, WindowEvent.WINDOW_CLOSING));
+				//NGD.dispatchEvent(new WindowEvent(NGD, WindowEvent.WINDOW_CLOSING));
+				try {
+					new NewGameDialog();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		    }
+		});
+
+		
 		this.startGame = new JButton(Messages.getString("NewGameDialog.9")); //$NON-NLS-1$
 		this.startGame.setBounds(this.getWidth() - 230, this.getHeight() - 90,
 				200, 40);
 		this.startGame.setForeground(Color.WHITE);
-		this.startGame.setBackground(Color.BLACK);
+		this.menuGame.setBackground(new Color(100, 100, 100, 200));
 		this.startGame.setVisible(true);
 		this.StartNewGameAction_ = new ActionListener() {
 			@Override
@@ -428,6 +471,9 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		};
 		this.startGame.addActionListener(this.StartNewGameAction_);
 		this.getContentPane().add(this.startGame);
+
+		//this.menuGame.addActionListener(this.StartNewGameAction_);
+		this.getContentPane().add(this.menuGame);
 
 		this.validate();
 		this.repaint();
