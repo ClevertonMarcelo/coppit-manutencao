@@ -25,12 +25,12 @@ public class FDHGameFacade {
 	public FDHGameFacade(FDHBoardController control, File file) {
 		ArrayList<PersistenceData> moves;
 		moves = control.getFDHGame().getPars().decodeMoves(file);
-		for (int i = 0; i < moves.get(0).getIsComputer().length; i++) {
-			moves.get(0).getIsComputer()[i] = false;
+		for (int i = 0; i < moves.get(0).getIsComputerPlayer().length; i++) {
+			moves.get(0).getIsComputerPlayer()[i] = false;
 		}
 
-		this.addPlayers(moves.get(0).getNames(), moves.get(0).getColors(),
-				moves.get(0).getIsComputer(), control.getFDHGame());
+		this.addPlayers(moves.get(0).getPlayerNames(), moves.get(0).getPlayerColors(),
+				moves.get(0).getIsComputerPlayer(), control.getFDHGame());
 		control.getFDHGame().CreateGame();
 		control.replayGame(moves);
 	}

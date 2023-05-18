@@ -1,87 +1,70 @@
-/*
- * Copyright (C) 2010  Denny Stohr - University of Mannheim
- */
 package de.uni_mannheim.swt.pm_7.fdh.domain;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ComputerPlayer.
+ * The ComputerPlayer class represents a computer player in a game.
  */
 public class ComputerPlayer {
 
-	/** The current hat_. */
-	private Hat currentHat_;
+    private Hat currentHat;
+    private Field currentField;
 
-	/** The current field_. */
-	private Field currentField_;
+    /**
+     * Instantiates a new computer player.
+     */
+    public ComputerPlayer() {
+    }
 
-	/**
-	 * Instantiates a new computer player.
-	 */
-	public ComputerPlayer() {
+    /**
+     * Chooses a hat from the available players' hats.
+     *
+     * @param playersHats the players' hats
+     */
+    public void chooseHat(List<Hat> playersHats) {
+        currentHat = playersHats.get(new Random().nextInt(playersHats.size()));
+        for (Hat hat : playersHats) {
+            if (hat.hasCatched()) {
+                currentHat = hat;
+            }
+        }
+        currentField = currentHat.getField();
+        currentHat.setSourcePos((Point) currentHat.getPosition());
+    }
 
-	}
+    /**
+     * Gets the current field.
+     *
+     * @return the current field
+     */
+    public Field getCurrentField() {
+        return currentField;
+    }
 
-	/**
-	 * Choose hat.
-	 *
-	 * @param playersHats the players hats
-	 */
-	public void chooseHat(ArrayList<Hat> playersHats) {
-		// ArrayList<Hat> temp = new ArrayList<Hat>();
-		// for (Hat t: playersHats)
-		// temp.add(t);
-		this.currentHat_ = playersHats.get((int) ((Math.random() * playersHats
-				.size())));
-		for (Hat t : playersHats) {
-			if (t.hasCatched()) {
-				this.currentHat_ = t;
-			}
-		}
+    /**
+     * Gets the current hat.
+     *
+     * @return the current hat
+     */
+    public Hat getCurrentHat() {
+        return currentHat;
+    }
 
-		this.currentField_ = this.currentHat_.getField();
-		this.currentHat_.setSourcePos((Point) this.currentHat_.getPosition());
-	}
-
-	/**
-	 * Gets the current field.
-	 *
-	 * @return the current field
-	 */
-	public Field getCurrentField() {
-		return this.currentField_;
-	}
-
-	/**
-	 * Gets the current hat.
-	 *
-	 * @return the current hat
-	 */
-	public Hat getCurrentHat() {
-		return this.currentHat_;
-	}
-
-	/**
-	 * Gets the dest field.
-	 *
-	 * @param legal the legal
-	 * @return the dest field
-	 */
-	public Field getDestField(ArrayList<Field> legal) {
-		if (this.currentHat_.hasCatched()) {
+    public Field getDestField(ArrayList<Field> legal) {
+		if (this.currentHat.hasCatched()) {
 			for (Field f : legal) {
 				if (f.isHouse()
-						&& (f.getColor() == this.currentHat_.getHadColor())) {
+						&& (f.getColor() == this.currentHat.getHadColor())) {
 					return f;
 				}
 			}
 		} else {
 			for (Field f : legal) {
 				if ((f.getHads().size() > 0)
-						&& (f.getColor() != this.currentHat_.getHadColor())) {
+						&& (f.getColor() != this.currentHat.getHadColor())) {
 					return f;
 				}
 			}
@@ -89,5 +72,4 @@ public class ComputerPlayer {
 
 		return legal.get((int) (Math.random() * legal.size()));
 	}
-
 }

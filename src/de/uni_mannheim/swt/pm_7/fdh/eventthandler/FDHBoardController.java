@@ -359,7 +359,7 @@ public class FDHBoardController extends Observable implements Observer {
 			this.playesGame_.CreateGame();
 			for (int i = 0; i < this.sequenceOfReplay_; i++) {
 				this.playesGame_.getDice().setCurrentNumber(
-						this.dataForReplay_.get(i).getNumber());
+						this.dataForReplay_.get(i).getDicedNumberOfTurns());
 				this.playesGame_.getDice().setUsed(false);
 				this.onMouseMove(this.dataForReplay_.get(i).getSource());
 				this.onMouseClick(this.dataForReplay_.get(i).getSource());
@@ -390,7 +390,7 @@ public class FDHBoardController extends Observable implements Observer {
 			this.playesGame_.getDice()
 					.setCurrentNumber(
 							this.dataForReplay_.get(this.sequenceOfReplay_)
-									.getNumber());
+									.getDicedNumberOfTurns());
 			this.playesGame_.getDice().setUsed(false);
 
 			this.onMouseMove(this.dataForReplay_.get(this.sequenceOfReplay_)
@@ -530,7 +530,7 @@ public class FDHBoardController extends Observable implements Observer {
 	public void setComputer() {
 		int i = 0;
 		for (Player p : this.playesGame_.getPlayers()) {
-			p.setComputer(this.dataForReplay_.get(1).getIsComputer()[i]);
+			p.setComputer(this.dataForReplay_.get(1).getIsComputerPlayer()[i]);
 			i++;
 		}
 	}
