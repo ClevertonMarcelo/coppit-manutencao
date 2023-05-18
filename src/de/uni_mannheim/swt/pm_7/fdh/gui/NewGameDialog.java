@@ -460,7 +460,7 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.startGame.setBounds(this.getWidth() - 230, this.getHeight() - 90,
 				200, 40);
 		this.startGame.setForeground(Color.WHITE);
-		this.menuGame.setBackground(new Color(100, 100, 100, 200));
+		this.startGame.setBackground(new Color(100, 100, 100, 200));
 		this.startGame.setVisible(true);
 		this.StartNewGameAction_ = new ActionListener() {
 			@Override
