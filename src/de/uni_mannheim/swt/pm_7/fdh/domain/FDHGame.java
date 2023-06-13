@@ -117,12 +117,26 @@ public class FDHGame extends Observable {
 		this.notifyObservers();
 	}
 
+	//Creates the hats for each player.
+	private void createPlayerHats() {
+		for (Player p : this.playersInGame_) {
+			if (p != null) {
+				this.boardOfGame_.getHouse().get(this.playersInGame_.indexOf(p)).setColor(p.getColor());
+
+				for (int i = 0; i < 6; i++) {
+					this.tempHat_ = new Hat(p.getColor(), i, this.boardOfGame_.getStartPoisitions(p.getColor()).get(i),
+							this.boardOfGame_.getFieldtoPoint(this.boardOfGame_.getStartPoisitions(p.getColor()).get(i)));
+					p.addHat(this.tempHat_);
+				}
+			}
+		}
+	}
+
 	/**
 	 * Creates the game.
 	 */
 	public void CreateGame() {
 		try {
-
 			for (Player p : this.getPlayers()) {
 				p.getHads().clear();
 				p.getScoreHads().clear();
@@ -132,34 +146,15 @@ public class FDHGame extends Observable {
 			this.playersInGame_.get(0).setactive(true);
 			this.activePlayer_ = this.playersInGame_.get(0);
 			this.nextPlayer_ = this.playersInGame_.get(0);
-			for (Player p : this.playersInGame_) {
-				if (p != null) {
-					this.boardOfGame_.getHouse()
-							.get(this.playersInGame_.indexOf(p))
-							.setColor(p.getColor());
 
-					for (int i = 0; i < 6; i++) {
-						this.tempHat_ = new Hat(p.getColor(), i,
-								this.boardOfGame_.getStartPoisitions(
-										p.getColor()).get(i),
-								this.boardOfGame_
-										.getFieldtoPoint(this.boardOfGame_
-												.getStartPoisitions(
-														p.getColor()).get(i)));
-						p.addHat(this.tempHat_);
-					}
-				}
+			this.createPlayerHats();
 
-			}
 			if (this.activePlayer_.isComputer()) {
 				this.gameKiMove();
 			}
-
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
