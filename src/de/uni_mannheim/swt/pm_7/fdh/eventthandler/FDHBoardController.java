@@ -281,44 +281,15 @@ public class FDHBoardController extends Observable implements Observer {
 	/**
 	 * Highlight fields.
 	 */
-	public synchronized void highlightFields()
-
-	{
+	public synchronized void highlightFields() {
 		super.setChanged();
 		super.notifyObservers();
+
 		ArrayList<Hat> temp = this.playesGame_.getActivePlayer().getHads();
-		for (Field s : this.playesGame_.getFields()) {
-			for (Hat h : temp) {
-				if (s.getField()
-						.contains(this.presentMousePoint_.getLocation())
-						&& h.contains(this.presentMousePoint_)) {
-					this.highlitedField_ = s;
-					if ((this.selectedHat_ == null)
-							&& !this.playesGame_.getDice().isUsed()) {
-						this.reachableFieldList_ = this.playesGame_
-								.getLegalReachable(s, h);
-					}
-					super.setChanged();
-					super.notifyObservers();
-					this.helpBoolean_ = true;
-				}
-			}
-		}
-		for (Field s : this.playesGame_.getHosues()) {
-			for (Hat h : temp) {
-				if (s.getField()
-						.contains(this.presentMousePoint_.getLocation())
-						&& h.contains(this.presentMousePoint_)) {
-					this.highlitedField_ = s;
-					if ((this.selectedHat_ == null)
-							&& !this.playesGame_.getDice().isUsed()) {
-						this.reachableFieldList_ = this.playesGame_
-								.getLegalReachable(s, h);
-					}
-					this.helpBoolean_ = true;
-				}
-			}
-		}
+
+		checkFieldsForHighlight(temp, this.playesGame_.getFields());
+		checkFieldsForHighlight(temp, this.playesGame_.getHosues());
+
 		if (!this.helpBoolean_) {
 			this.highlitedField_ = null;
 			if (this.selectedHat_ == null) {
@@ -329,7 +300,28 @@ public class FDHBoardController extends Observable implements Observer {
 		} else {
 			this.helpBoolean_ = false;
 		}
+	}
 
+	/**
+	 * Check fields for highlight.
+	 *
+	 * @param hats   the hats
+	 * @param fields the fields
+	 */
+	private void checkFieldsForHighlight(ArrayList<Hat> hats, ArrayList<Field> fields) {
+		for (Field s : fields) {
+			for (Hat h : hats) {
+				if (s.getField().contains(this.presentMousePoint_.getLocation()) && h.contains(this.presentMousePoint_)) {
+					this.highlitedField_ = s;
+					if ((this.selectedHat_ == null) && !this.playesGame_.getDice().isUsed()) {
+						this.reachableFieldList_ = this.playesGame_.getLegalReachable(s, h);
+					}
+					super.setChanged();
+					super.notifyObservers();
+					this.helpBoolean_ = true;
+				}
+			}
+		}
 	}
 
 	/**
