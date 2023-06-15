@@ -102,7 +102,8 @@ public class NewGameDialog extends JFrame implements ActionListener,
 	
 	private boolean firstScreen = true;
 
-	
+	private String computer = "BOT PLAYER";
+
 	public static void main(String ...args) throws IOException {
 		 new NewGameDialog();
 	}
@@ -120,7 +121,7 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.setForeground(Color.WHITE);
 		this.setBackground(Color.white);
 		this.setLocationByPlatform(true);
-		this.setTitle("Coppit Game");
+		this.setTitle("COPPIT GAME");
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/de/uni_mannheim/swt/pm_7/fdh/gui/coppitIcon.png"));	
         this.loadImage();
 
@@ -232,7 +233,7 @@ public class NewGameDialog extends JFrame implements ActionListener,
 				Messages.getString("NewGameDialog.1")); //$NON-NLS-1$
 		this.analyseGameButton_.setBounds(this.getWidth() / 4 - width / 2,
 				this.getHeight() / 2 - height / 2, width, height);
-		this.analyseGameButton_.setForeground(Color.WHITE);
+		this.analyseGameButton_.setForeground(Color.CYAN);
 		this.analyseGameButton_.setBackground(Color.BLACK);
 		this.analyseGameButton_.setVisible(true);
 		this.analyseGameButton_.setBorder(border);
@@ -251,7 +252,7 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.resetGame_ = new JButton(Messages.getString("NewGameDialog.10")); //$NON-NLS-1$
 		this.resetGame_.setBounds((int) (this.getWidth() / 1.33 - width / 2),
 				this.getHeight() / 2 - height / 2, width, height);
-		this.resetGame_.setForeground(Color.WHITE);
+		this.resetGame_.setForeground(Color.GREEN);
 		this.resetGame_.setBackground(Color.BLACK);
 		this.resetGame_.setVisible(true);
 		this.resetGame_.setBorder(border);
@@ -283,7 +284,7 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.listOfPlayers_.setSelectedIndex(1);
 		this.listOfPlayers_.setBounds(this.getWidth() / 2 - width / 2,
 				this.getHeight() / 2 - height / 2 + 200, width, height);
-		this.listOfPlayers_.setForeground(Color.WHITE);
+		this.listOfPlayers_.setForeground(Color.YELLOW);
 		this.listOfPlayers_.setBackground(Color.BLACK);
 		this.listOfPlayers_.setVisible(true);
 		// Cria uma borda simples com cor vermelha
@@ -399,17 +400,17 @@ public class NewGameDialog extends JFrame implements ActionListener,
 
 		for (int i = 0; i < num; i++) {
 			this.listOfPlayerElementNames_.get(i).setBounds(50, (80 * i) + 30,
-					100, 30);
+					110, 30);
 			this.listOfPlayerElementNames_.get(i).setText(
 					Messages.getString("NewGameDialog.7") + (i + 1)); //$NON-NLS-1$
-			this.listOfPlayerElementNames_.get(i).setForeground(Color.WHITE);
+			this.listOfPlayerElementNames_.get(i).setForeground(Color.YELLOW);
 			this.listOfPlayerElementNames_.get(i).setBackground(Color.BLACK);
 			this.listOfPlayerElementNames_.get(i).setVisible(true);
 
 			this.listrOfPlayerNames_.get(i).setBounds(200, (80 * i) + 30, 100,
 					30);
 			this.listrOfPlayerNames_.get(i).setVisible(true);
-			this.listrOfPlayerNames_.get(i).setForeground(Color.WHITE);
+			this.listrOfPlayerNames_.get(i).setForeground(Color.GRAY);
 			this.listrOfPlayerNames_.get(i).setBackground(Color.BLACK);
 			// änder noch nicht automatisch
 			this.listrOfPlayerNames_.get(i).addInputMethodListener(this);
@@ -421,7 +422,7 @@ public class NewGameDialog extends JFrame implements ActionListener,
 			this.computerPlayerCheckBox_.get(i).setText(
 					Messages.getString("NewGameDialog.8")); //$NON-NLS-1$
 			this.computerPlayerCheckBox_.get(i).setVisible(true);
-			this.computerPlayerCheckBox_.get(i).setForeground(Color.WHITE);
+			this.computerPlayerCheckBox_.get(i).setForeground(Color.CYAN);
 			this.computerPlayerCheckBox_.get(i).setBackground(Color.BLACK);
 
 			this.plyerColorList_.get(i).setLocation(600, (80 * i) + 30);
@@ -453,7 +454,7 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.menuGame = new JButton(Messages.getString("FDHBoardView.13"));
 		this.menuGame.setBounds(this.getWidth() - 500, this.getHeight() - 90,
 		200, 40);
-		this.menuGame.setForeground(Color.WHITE);
+		this.menuGame.setForeground(Color.RED);
 		this.menuGame.setBackground(new Color(100, 100, 100, 200));
 		this.menuGame.setVisible(true);
 
@@ -471,7 +472,7 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.startGame = new JButton(Messages.getString("NewGameDialog.9")); //$NON-NLS-1$
 		this.startGame.setBounds(this.getWidth() - 230, this.getHeight() - 90,
 				200, 40);
-		this.startGame.setForeground(Color.WHITE);
+		this.startGame.setForeground(Color.GREEN);
 		this.startGame.setBackground(new Color(100, 100, 100, 200));
 		this.startGame.setVisible(true);
 		// Cria uma borda simples com cor azul

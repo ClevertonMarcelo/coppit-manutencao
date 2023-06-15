@@ -61,7 +61,7 @@ public class FDHBoardView extends JPanel implements MouseMotionListener,
 		this.setLayout(null);
 		restartGame = new JButton(Messages.getString("FDHBoardView.12"));
 		restartGame.setBounds(200, 400, 100, 30);
-		restartGame.setForeground(Color.WHITE);
+		restartGame.setForeground(Color.GREEN);
 		restartGame.setBackground(new Color(100, 100, 100, 200));
 		restartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -91,7 +91,7 @@ public class FDHBoardView extends JPanel implements MouseMotionListener,
 		this.add(menuGame);
 		exitGame = new JButton(Messages.getString("FDHBoardView.14"));
 		exitGame.setBounds(500, 400, 100, 30);
-		exitGame.setForeground(Color.WHITE);
+		exitGame.setForeground(Color.RED);
 		exitGame.setBackground(new Color(100, 100, 100, 200));
 		exitGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

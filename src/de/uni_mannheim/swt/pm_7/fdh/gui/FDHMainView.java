@@ -192,7 +192,7 @@ public class FDHMainView extends JFrame {
 		// TUTORIAL BUTTON
 		this.tutButton = new JButton(Messages.getString("FDHMainView.11")); //$NON-NLS-1$
 		this.tutButton.setBounds(760, 10, 200, 30);
-		this.tutButton.setForeground(Color.WHITE);
+		this.tutButton.setForeground(Color.YELLOW);
 		this.tutButton.setBackground(this.getContentPane().getBackground());
 		this.tutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
