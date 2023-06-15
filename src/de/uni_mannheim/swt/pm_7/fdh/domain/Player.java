@@ -99,6 +99,24 @@ public class Player implements Serializable {
 		return this.hadsOfPlayer_;
 	}
 
+	// public void writeObject(java.io.ObjectOutputStream out)
+	// throws IOException
+	// {
+	// out.writeObject(color);
+	// out.writeObject(name);
+	// }
+	//
+	// public void readObject(java.io.ObjectInputStream in)
+	// throws IOException, ClassNotFoundException
+	// {
+	// // String name = (String)in.readObject();
+	// // Color color = (Color)in.readObject();
+	// // boolean comp = in.readBoolean();
+	// //
+	// // this.setColor(getColor());
+	//
+	// }
+
 	/**
 	 * Gets the kI.
 	 *
