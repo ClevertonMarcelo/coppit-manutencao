@@ -56,6 +56,8 @@ public class FDHGame extends Observable {
 	/** The game is replay mode_. */
 	private boolean gameIsReplayMode_;
 
+	private FDHGameMove fdhGameMove;
+
 	/**
 	 * Instantiates a new fDH game.
 	 */
@@ -65,7 +67,7 @@ public class FDHGame extends Observable {
 		this.boardOfGame_ = new Board();
 		this.moveOfGame_ = new ArrayList<PersistenceData>();
 		this.playersInGame_ = new ArrayList<Player>();
-		this.saveGameXML_ = new XMLParser();
+		this.saveGameXML_ = new XMLParser();		
 	}
 
 	/**
@@ -269,8 +271,10 @@ public class FDHGame extends Observable {
 		ArrayList<Field> temp_del = new ArrayList<Field>();
 		temp = this.boardOfGame_.getReachableFields(
 				this.diceOfGame_.getLastNumber(), s);
+
+		this.fdhGameMove = new FDHGameMove();
 		for (Field f : temp) {
-			if (!this.legalmove(f, h)) {
+			if (!fdhGameMove.legalmove(f, h)) {
 				temp_del.add(f);
 			}
 		}
@@ -401,29 +405,6 @@ public class FDHGame extends Observable {
 	}
 
 	/**
-	 * Legalmove.
-	 *
-	 * @param s the s
-	 * @param h the h
-	 * @return true, if successful
-	 */
-	public boolean legalmove(Field s, Hat h) {
-		if (s.isWaitField()) {
-			if (s.getHads().size() > 3) {
-				return false;
-			}
-		}
-		if (s.isHouse()) {
-			if ((s.getColor() != h.getHadColor())
-					|| ((s.getColor() == h.getHadColor()) && (h.getCatchedNum() == 0))) {
-				return false;
-			}
-		}
-		return true;
-
-	}
-
-	/**
 	 * Make move.
 	 *
 	 * @param t the t
@@ -479,9 +460,6 @@ public class FDHGame extends Observable {
 			if (this.activePlayer_.isComputer()) {
 				this.activePlayer_.initKImove();
 				this.gameKiMove();
-//				this.activePlayer_.initKImove();
-				// this.change();
-				// this.run();
 			}
 		}
 
@@ -566,6 +544,8 @@ public class FDHGame extends Observable {
 		}
 
 	}
+
+	
 
 	/**
 	 * Roll dice.
