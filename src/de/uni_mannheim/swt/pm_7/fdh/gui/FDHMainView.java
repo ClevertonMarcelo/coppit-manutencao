@@ -10,11 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
-import java.util.Timer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -202,22 +202,6 @@ public class FDHMainView extends JFrame {
 		});
 		this.tutButton.setVisible(true);
 		this.getContentPane().add(this.tutButton);
-				
-		// TEMP FINISH BUTTON
-		/*
-		this.tempFinishButton = new JButton("Finish Game"); //$NON-NLS-1$
-		this.tempFinishButton.setBounds(760, 650, 200, 30);
-		this.tempFinishButton.setForeground(Color.WHITE);
-		this.tempFinishButton.setBackground(this.getContentPane().getBackground());
-		this.tempFinishButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FDHMainView.this.gamepanel_.getControl().getFDHGame().setFinished(true);
-				FDHMainView.this.gamepanel_.getControl().getFDHGame().change();
-		    }
-		});
-		this.tempFinishButton.setVisible(true);
-		this.getContentPane().add(this.tempFinishButton);
-		*/
 		
 		this.getContentPane().add(this.click);
 		this.gamepanel_.setDoubleBuffered(true);
@@ -232,7 +216,9 @@ public class FDHMainView extends JFrame {
 	private void init() {
 		this.addComponentListener(FDHMainView.window);
 		this.setSize(1024, 800);
-		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setUndecorated(true);
+        this.setVisible(true);		
 		this.setLayout(null);
 		this.getContentPane().setBackground(Color.BLACK);
 		
@@ -330,141 +316,84 @@ public class FDHMainView extends JFrame {
 	 *
 	 * @param chosenFile the chosen file
 	 */
+
+		/**
+	 * Inicializa o modo de replay.
+	 *
+	 * @param chosenFile o arquivo escolhido
+	 */
 	public void initReplayMode(File chosenFile) {
-		this.setGameFacade_(new FDHGameFacade(this.getBoard().getControl(),
-				chosenFile));
+		this.setGameFacade_(new FDHGameFacade(this.getBoard().getControl(), chosenFile));
 		this.remove(this.click);
+		inicializarBotoesReplay();
+		inicializarBotaoAutoPlayReplay();
+		inicializarEventoClicado();
+		inicializarAcaoReplayAvancar();
+		inicializarAcaoReplayVoltar();
+		inicializarBarraProgresso();
+		inicializarDiced();
+		exibirJogadores();
+	}
+
+		
+	private void inicializarBotoesReplay() {
 		this.replayForward_ = new JButton();
 		this.replayForward_.setBounds(760, 50, 100, 50);
 		this.initButton(this.replayForward_);
+
 		this.replayBackward_ = new JButton();
 		this.replayBackward_.setBounds(860, 50, 100, 50);
 		this.initButton(this.replayBackward_);
+
 		this.replayForward_.setText(Messages.getString("FDHMainView.6")); //$NON-NLS-1$
 		this.replayBackward_.setText(Messages.getString("FDHMainView.7")); //$NON-NLS-1$
+
 		this.gamepanel_.removeMouseListener(this.gamepanel_);
+	}
+
+	private void inicializarBotaoAutoPlayReplay() {
 		this.autoPlayReplay_ = new JButton(Messages.getString("FDHMainView.10")); //$NON-NLS-1$
 		this.autoPlayReplay_.setBounds(760, 200, 200, 50);
 		this.initButton(this.autoPlayReplay_);
-		this.playedClicked_ = new MouseListener() {
+	}
 
+	private void inicializarEventoClicado() {
+		this.playedClicked_ = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Timer time = new Timer();
-				java.util.TimerTask task = new ReplayMode(
-						FDHMainView.this.replayForwardAction_);
-				time.schedule(task, 0, 2);
-
+				java.util.Timer timer = new java.util.Timer();
+				java.util.TimerTask task = new ReplayMode(FDHMainView.this.replayForwardAction_);
+				timer.schedule(task, 0, 2);
 			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
 		};
-		this.autoPlayReplay_.addMouseListener(this.playedClicked_);
-		this.replayForwardAction_ = new MouseListener() {
+		this.autoPlayReplay_.addMouseListener((MouseListener) this.playedClicked_);
+	}
 
+	private void inicializarAcaoReplayAvancar() {
+		this.replayForwardAction_ = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				FDHMainView.this.gamepanel_.getControl().next();
 				FDHMainView.this.displayPlayers();
-				FDHMainView.this.progressBar_
-						.setValue(FDHMainView.this.gamepanel_.getControl()
-								.getSequence());
-				FDHMainView.this.dicedNumber_.setText(String
-						.valueOf(FDHMainView.this.gamepanel_.getControl()
-								.getNumber()));
-
+				FDHMainView.this.progressBar_.setValue(FDHMainView.this.gamepanel_.getControl().getSequence());
+				FDHMainView.this.dicedNumber_.setText(String.valueOf(FDHMainView.this.gamepanel_.getControl().getNumber()));
 			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
 		};
+		this.replayForward_.addMouseListener(this.replayForwardAction_);
+	}
 
-		this.replayBackward_.addMouseListener(this.replayForwardAction_);
-
-		this.replayBackwordAction_ = new MouseListener() {
-
+	private void inicializarAcaoReplayVoltar() {
+		this.replayBackwordAction_ = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				FDHMainView.this.gamepanel_.getControl().left();
-				FDHMainView.this.progressBar_
-						.setValue(FDHMainView.this.gamepanel_.getControl()
-								.getSequence());
-
+				FDHMainView.this.progressBar_.setValue(FDHMainView.this.gamepanel_.getControl().getSequence());
 			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
 		};
+		this.replayBackward_.addMouseListener(this.replayBackwordAction_);
+	}
 
-		this.replayForward_.addMouseListener(this.replayBackwordAction_);
-
+	private void inicializarBarraProgresso() {
 		this.dicedNumber_.setText(Messages.getString("FDHMainView.8")); //$NON-NLS-1$
 		this.progressBar_ = new JProgressBar();
 		this.progressBar_.setBounds(760, 110, 200, 50);
@@ -475,10 +404,16 @@ public class FDHMainView extends JFrame {
 		this.progressBar_.setMaximum(this.gamepanel_.getControl().moveSize());
 		this.progressBar_.setMinimum(0);
 		this.getContentPane().add(this.dicedNumber_);
-		this.initDiced();
-		this.displayPlayers();
-
 	}
+
+	private void inicializarDiced() {
+		this.initDiced();
+	}
+
+	private void exibirJogadores() {
+		this.displayPlayers();
+	}
+
 
 	/**
 	 * Inits the reset mode.
