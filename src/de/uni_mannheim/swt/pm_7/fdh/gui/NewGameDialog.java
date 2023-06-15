@@ -5,6 +5,8 @@ package de.uni_mannheim.swt.pm_7.fdh.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -26,8 +29,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
+import javax.swing.border.Border;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -121,6 +123,7 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.setTitle("Coppit Game");
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/de/uni_mannheim/swt/pm_7/fdh/gui/coppitIcon.png"));	
         this.loadImage();
+
 		JFrame frame = new JFrame();
 		// Obter o dispositivo gráfico padrão
 		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -209,6 +212,9 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.clickNewGame_.setForeground(Color.WHITE);
 		this.clickNewGame_.setBackground(Color.BLACK);
 		this.clickNewGame_.setVisible(true);
+		 // Cria uma borda simples com cor vermelha
+        Border border = BorderFactory.createLineBorder(Color.RED);
+		this.clickNewGame_.setBorder(border);
 		this.clickedNewGameListener_ = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -229,6 +235,7 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.analyseGameButton_.setForeground(Color.WHITE);
 		this.analyseGameButton_.setBackground(Color.BLACK);
 		this.analyseGameButton_.setVisible(true);
+		this.analyseGameButton_.setBorder(border);
 		this.getContentPane().add(this.analyseGameButton_);
 		this.clickedAnalyse_ = new ActionListener() {
 			@Override
@@ -247,6 +254,7 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.resetGame_.setForeground(Color.WHITE);
 		this.resetGame_.setBackground(Color.BLACK);
 		this.resetGame_.setVisible(true);
+		this.resetGame_.setBorder(border);
 		this.getContentPane().add(this.resetGame_);
 		this.resetGameAct_ = new ActionListener() {
 			@Override
@@ -278,6 +286,9 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.listOfPlayers_.setForeground(Color.WHITE);
 		this.listOfPlayers_.setBackground(Color.BLACK);
 		this.listOfPlayers_.setVisible(true);
+		// Cria uma borda simples com cor vermelha
+        Border border = BorderFactory.createLineBorder(Color.RED);
+		this.listOfPlayers_.setBorder(border);
 	}
 
 	/*
@@ -400,7 +411,6 @@ public class NewGameDialog extends JFrame implements ActionListener,
 			this.listrOfPlayerNames_.get(i).setVisible(true);
 			this.listrOfPlayerNames_.get(i).setForeground(Color.WHITE);
 			this.listrOfPlayerNames_.get(i).setBackground(Color.BLACK);
-
 			// änder noch nicht automatisch
 			this.listrOfPlayerNames_.get(i).addInputMethodListener(this);
 			this.listrOfPlayerNames_.get(i).setText(
@@ -418,6 +428,11 @@ public class NewGameDialog extends JFrame implements ActionListener,
 			this.plyerColorList_.get(i).addMouseListener(this.mouseListener_);
 			this.plyerColorList_.get(i).setVisible(true);
 
+			Border border = BorderFactory.createLineBorder(Color.BLUE);
+			this.listOfPlayerElementNames_.get(i).setBorder(border);
+
+			Border borderdigiBorder = BorderFactory.createEtchedBorder(getBackground(), getForeground());
+			this.listrOfPlayerNames_.get(i).setBorder(borderdigiBorder);
 		}
 		for (JTextField f : this.listrOfPlayerNames_) {
 			this.getContentPane().add(f);
@@ -444,12 +459,9 @@ public class NewGameDialog extends JFrame implements ActionListener,
 
 		menuGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//FMV.dispatchEvent(new WindowEvent(FMV, WindowEvent.WINDOW_CLOSING));
-				//NGD.dispatchEvent(new WindowEvent(NGD, WindowEvent.WINDOW_CLOSING));
 				try {
 					new NewGameDialog();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 		    }
@@ -462,6 +474,10 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.startGame.setForeground(Color.WHITE);
 		this.startGame.setBackground(new Color(100, 100, 100, 200));
 		this.startGame.setVisible(true);
+		// Cria uma borda simples com cor azul
+        Border border = BorderFactory.createLineBorder(Color.BLUE);
+		this.startGame.setBorder(border);
+		this.menuGame.setBorder(border);
 		this.StartNewGameAction_ = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -472,7 +488,6 @@ public class NewGameDialog extends JFrame implements ActionListener,
 		this.startGame.addActionListener(this.StartNewGameAction_);
 		this.getContentPane().add(this.startGame);
 
-		//this.menuGame.addActionListener(this.StartNewGameAction_);
 		this.getContentPane().add(this.menuGame);
 
 		this.validate();
