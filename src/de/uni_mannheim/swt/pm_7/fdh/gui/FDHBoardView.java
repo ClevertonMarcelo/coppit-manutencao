@@ -235,17 +235,6 @@ public class FDHBoardView extends JPanel implements MouseMotionListener,
 				g2.fill(s.getField());
 				g2.setPaint(Color.WHITE);
 
-				// int i = 0;
-				// for (Point m : s.getPositions())
-				// {
-				// if (m != null)
-				// {
-				// g2.drawString(String.valueOf(i), m.x, m.y);
-				// i++;
-				// }
-
-				// }
-
 			}
 			for (Field f : this.controllerOfBoard_.getHouses()) {
 				g2.setPaint(f.getColor());
