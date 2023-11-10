@@ -28,6 +28,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
@@ -540,38 +541,45 @@ public class NewGameDialog extends JFrame implements ActionListener,
 	 * Start new game.
 	 */
 	protected void startNewGame() {
-		this.setVisible(false);
-		FDHMainView game = new FDHMainView(this);
-		game.setEnabled(true);
-		game.repaint();
-		game.validate();
+	    // Check if any player has not selected a color
+	    for (int i = 0; i < counting_; i++) {
+	        if (plyerColorList_.get(i).getColor() == null) {
+	            JOptionPane.showMessageDialog(this, "Por favor, selecione uma cor para cada player!");
+	            return; // Stop the method if a player hasn't selected a color
+	        }
+	    }
 
-		this.counting_ = this.listOfPlayers_.getAnchorSelectionIndex() + 2;
-		System.out.print(this.counting_);
-		String[] names = new String[this.counting_];
-		Color[] color = new Color[this.counting_];
-		boolean[] computer = new boolean[this.counting_];
+	    setVisible(false);
+	    FDHMainView game = new FDHMainView(this);
+	    game.setEnabled(true);
+	    game.repaint();
+	    game.validate();
 
-		try {
-			int i = 0;
+	    counting_ = listOfPlayers_.getAnchorSelectionIndex() + 2;
+	    System.out.print(counting_);
+	    String[] names = new String[counting_];
+	    Color[] color = new Color[counting_];
+	    boolean[] computer = new boolean[counting_];
 
-			while (i < this.counting_) {
-				color[i] = this.plyerColorList_.get(i).getColor();
-				names[i] = this.listrOfPlayerNames_.get(i).getText();
-				computer[i] = this.computerPlayerCheckBox_.get(i).isSelected();
-				i++;
-			}
+	    try {
+	        int i = 0;
 
-			game.initGame(names, color, computer);
-			game.displayPlayers();
-		} catch (Exception e) {
+	        while (i < counting_) {
+	            color[i] = plyerColorList_.get(i).getColor();
+	            names[i] = listrOfPlayerNames_.get(i).getText();
+	            computer[i] = computerPlayerCheckBox_.get(i).isSelected();
+	            i++;
+	        }
 
-			e.printStackTrace();
-			e.getMessage();
-		}
+	        game.initGame(names, color, computer);
+	        game.displayPlayers();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        e.getMessage();
+	    }
 
-		this.dispose();
-
+	    dispose();
 	}
+
 
 }
